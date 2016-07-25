@@ -149,6 +149,7 @@ class IranSystem{
         "ه" => ["ﻫ","ه","ﻬ",["251","249","250"],["","249"]],
         "ی" => ["ﯾ","ی","ﯾ",["254**","253","254"],["","253"]]
     ];
+    
     /**
      * @var array
      */
@@ -157,10 +158,6 @@ class IranSystem{
      * @var array
      */
     static $Pars_O  = [];
-    /**
-     * @var array
-     */
-    static $Pars_L  = [];
 
     /**
      * Convert From Utf-8 To IranSystem
