@@ -113,6 +113,8 @@ class IranSystem{
         " " => ["","","",["","",""],["","255"]],
         "ـ" => ["","","",["","",""],["ـ","139"]],
         "آ" => ["","","",["","",""],["ﺁ","141"]],
+        "ئ" => ["ﺋ","ئ","ﺋ",["142","142","142"],["ئ","142"]],
+        "ء" => ["","","",["","",""],["ء","143"]],
         "ا" => ["","ﺎ","",["","145",""],["","144"]],
         "ب" => ["ﺑ","ب","ﺑ",["147**","146**","147**"],["","146"]],
         "پ" => ["ﭘ","پ","ﭘ",["149**","148**","149**"],["","148"]],
@@ -199,11 +201,9 @@ class IranSystem{
             $l  = isset(IranSystem::$Pars_I[$i+1])?IranSystem::$Pars_I[$i+1]:null;
             $r  = isset(IranSystem::$Pars_I[$i-1])?IranSystem::$Pars_I[$i-1]:null;
             $in = IranSystem::howChar($l,IranSystem::$Pars_I[$i],$r);
-
+            //Fetch Array To Find Encoding
             if($in != false){
                 IranSystem::$Pars_O[] = chr(str_replace('*','',$in));
-            }else{
-                echo IranSystem::$Pars_I[$i],'<<<';
             }
         }
         return implode(array_reverse(IranSystem::$Pars_O));
