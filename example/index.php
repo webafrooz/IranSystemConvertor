@@ -4,7 +4,7 @@
  *    Email  : info@webafrooz.com
  *    Website: http://webafrooz.com
 */
-  include __DIR__.'../IranSystemConvertor.php';
+  include './../IranSystemConvertor.php';
   use webafrooz\IranSystem;
   
   //TO Iran System Example
