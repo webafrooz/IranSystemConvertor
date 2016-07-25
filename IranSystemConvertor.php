@@ -4,6 +4,8 @@ namespace webafrooz;
  * برنامه نویس : محمود اسکندری
  * Author: Mahmoud Eskandari
  * Email:Info@webafrooz.com
+ * 
+ * Source:https://en.wikipedia.org/wiki/Iran_System_encoding_standard
  * License Under MIT License.
  * Copyright 2016 Webafrooz.com.
  */
