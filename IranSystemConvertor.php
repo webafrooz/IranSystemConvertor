@@ -9,6 +9,20 @@ namespace webafrooz;
  * License Under MIT License.
  * Copyright 2016 Webafrooz.com.
  */
+if(!function_exists("mb_str_split")){
+    function mb_str_split($string,$string_length=1) {
+        if(mb_strlen($string)>$string_length || !$string_length) {
+            do {
+                $c = mb_strlen($string);
+                $parts[] = mb_substr($string,0,$string_length);
+                $string = mb_substr($string,$string_length);
+            }while(!empty($string));
+        } else {
+            $parts = array($string);
+        }
+        return $parts;
+    }
+}
 class IranSystem{
     /**
      * @var array
@@ -149,7 +163,6 @@ class IranSystem{
         "ه" => ["ﻫ","ه","ﻬ",["251","249","250"],["","249"]],
         "ی" => ["ﯾ","ی","ﯾ",["254**","253","254"],["","253"]]
     ];
-    
     /**
      * @var array
      */
@@ -165,20 +178,6 @@ class IranSystem{
      * @return mixed
      */
     public static function ToIranSystem($str = null){
-        if(!function_exists("mb_str_split")){
-            function mb_str_split($string,$string_length=1) {
-                if(mb_strlen($string)>$string_length || !$string_length) {
-                    do {
-                        $c = mb_strlen($string);
-                        $parts[] = mb_substr($string,0,$string_length);
-                        $string = mb_substr($string,$string_length);
-                    }while(!empty($string));
-                } else {
-                    $parts = array($string);
-                }
-                return $parts;
-            }
-        }
         //
         $str = str_replace(["ي","\0"],["ی",""],$str);
         $ss  = mb_str_split(trim($str));
@@ -197,13 +196,23 @@ class IranSystem{
         //
         $len = count(IranSystem::$Pars_I);
         for($i = 0;$i < $len;$i++){
-            $l  = isset(IranSystem::$Pars_I[$i+1])?IranSystem::$Pars_I[$i+1]:null;
-            $r  = isset(IranSystem::$Pars_I[$i-1])?IranSystem::$Pars_I[$i-1]:null;
-            $in = IranSystem::howChar($l,IranSystem::$Pars_I[$i],$r);
-            //Fetch Array To Find Encoding
-            if($in != false){
-                IranSystem::$Pars_O[] = chr(str_replace('*','',$in));
+            //If is EN Char
+            if(ord(IranSystem::$Pars_I[$i]) < 128){
+                IranSystem::$Pars_O[] = IranSystem::$Pars_I[$i];
+                //ELSE IF IS Persian Char
+            }else{
+                $l  = isset(IranSystem::$Pars_I[$i+1])?IranSystem::$Pars_I[$i+1]:null;
+                $r  = isset(IranSystem::$Pars_I[$i-1])?IranSystem::$Pars_I[$i-1]:null;
+                $in = IranSystem::howChar($l,IranSystem::$Pars_I[$i],$r);
+                //Fetch Array To Find Encoding
+                if($in != false){
+                    IranSystem::$Pars_O[] = chr(str_replace('*','',$in));
+                    //TODO: Check This Item.
+                }else{
+                    IranSystem::$Pars_O[] = IranSystem::$Pars_I[$i];
+                }
             }
+
         }
         return implode(array_reverse(IranSystem::$Pars_O));
     }
@@ -257,8 +266,12 @@ class IranSystem{
         $out = '';
         foreach($str as $rec){
             $ord = ord($rec);
-            if(isset($From[$ord])){
-                $out.= $From[$ord];
+            if($ord < 128){
+                $out.= chr($ord);
+            }else{
+                if(isset($From[$ord])){
+                    $out.= $From[$ord];
+                }
             }
         }
         return $out;
