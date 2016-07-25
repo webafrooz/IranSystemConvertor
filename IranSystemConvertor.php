@@ -165,17 +165,19 @@ class IranSystem{
      * @return mixed
      */
     public static function ToIranSystem($str = null){
-        function mb_str_split($string,$string_length=1) {
-            if(mb_strlen($string)>$string_length || !$string_length) {
-                do {
-                    $c = mb_strlen($string);
-                    $parts[] = mb_substr($string,0,$string_length);
-                    $string = mb_substr($string,$string_length);
-                }while(!empty($string));
-            } else {
-                $parts = array($string);
+        if(!function_exists("mb_str_split")){
+            function mb_str_split($string,$string_length=1) {
+                if(mb_strlen($string)>$string_length || !$string_length) {
+                    do {
+                        $c = mb_strlen($string);
+                        $parts[] = mb_substr($string,0,$string_length);
+                        $string = mb_substr($string,$string_length);
+                    }while(!empty($string));
+                } else {
+                    $parts = array($string);
+                }
+                return $parts;
             }
-            return $parts;
         }
         //
         $str = str_replace(["ي","\0"],["ی",""],$str);
