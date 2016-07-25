@@ -1,5 +1,12 @@
 <?php
 namespace webafrooz;
+/**
+ * برنامه نویس : محمود اسکندری
+ * Author: Mahmoud Eskandari
+ * Email:Info@webafrooz.com
+ * License Under MIT License.
+ * Copyright 2016 Webafrooz.com.
+ */
 class IranSystem{
     /**
      * @var array
