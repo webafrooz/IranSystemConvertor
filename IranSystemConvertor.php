@@ -173,11 +173,11 @@ class IranSystem{
     static $Pars_O  = [];
 
     /**
-     * Convert From Utf-8 To IranSystem
+     * Convert From Utf-8 To self
      * @param null $str
      * @return mixed
      */
-    public static function ToIranSystem($str = null){
+    public static function Toself($str = null){
         //
         $str = str_replace(["ي","\0"],["ی",""],$str);
         $ss  = mb_str_split(trim($str));
@@ -186,35 +186,35 @@ class IranSystem{
             if(isset($ss[$i])) {
                 if($ss[$i] == "ل" AND isset($ss[$i+1]) AND $ss[$i+1] == 'ا')
                 {
-                    IranSystem::$Pars_I[] = "لا";
+                    self::$Pars_I[] = "لا";
                     unset($ss[$i + 1]);
                 }else{
-                    IranSystem::$Pars_I[] = $ss[$i];
+                    self::$Pars_I[] = $ss[$i];
                }
             }
         }
         //
-        $len = count(IranSystem::$Pars_I);
+        $len = count(self::$Pars_I);
         for($i = 0;$i < $len;$i++){
             //If is EN Char
-            if(ord(IranSystem::$Pars_I[$i]) < 128){
-                IranSystem::$Pars_O[] = IranSystem::$Pars_I[$i];
+            if(ord(self::$Pars_I[$i]) < 128){
+                self::$Pars_O[] = self::$Pars_I[$i];
                 //ELSE IF IS Persian Char
             }else{
-                $l  = isset(IranSystem::$Pars_I[$i+1])?IranSystem::$Pars_I[$i+1]:null;
-                $r  = isset(IranSystem::$Pars_I[$i-1])?IranSystem::$Pars_I[$i-1]:null;
-                $in = IranSystem::howChar($l,IranSystem::$Pars_I[$i],$r);
+                $l  = isset(self::$Pars_I[$i+1])?self::$Pars_I[$i+1]:null;
+                $r  = isset(self::$Pars_I[$i-1])?self::$Pars_I[$i-1]:null;
+                $in = self::howChar($l,self::$Pars_I[$i],$r);
                 //Fetch Array To Find Encoding
                 if($in != false){
-                    IranSystem::$Pars_O[] = chr(str_replace('*','',$in));
+                    self::$Pars_O[] = chr(str_replace('*','',$in));
                     //TODO: Check This Item.
                 }else{
-                    IranSystem::$Pars_O[] = IranSystem::$Pars_I[$i];
+                    self::$Pars_O[] = self::$Pars_I[$i];
                 }
             }
 
         }
-        return implode(array_reverse(IranSystem::$Pars_O));
+        return implode(array_reverse(self::$Pars_O));
     }
 
     /**
@@ -225,39 +225,39 @@ class IranSystem{
      * @return bool|string
      */
     public static function howChar($l,$char,$r){
-        if(!isset(IranSystem::$N_LIST[$char])){
+        if(!isset(self::$N_LIST[$char])){
             return false;
         }
         $Result = 0;
-        if(!empty($r) AND !empty(IranSystem::$N_LIST[$char][1]) AND isset(IranSystem::$N_LIST[$r])){
-            if(!empty(IranSystem::$N_LIST[$r][0]))
+        if(!empty($r) AND !empty(self::$N_LIST[$char][1]) AND isset(self::$N_LIST[$r])){
+            if(!empty(self::$N_LIST[$r][0]))
                 $Result+= 4;
         }
-        if(!empty($l) AND !empty(IranSystem::$N_LIST[$char][0]) AND isset(IranSystem::$N_LIST[$l])){
-            if(!empty(IranSystem::$N_LIST[$l][1]))
+        if(!empty($l) AND !empty(self::$N_LIST[$char][0]) AND isset(self::$N_LIST[$l])){
+            if(!empty(self::$N_LIST[$l][1]))
                 $Result+=2;
         }
         if($Result == 6){
-            return IranSystem::$N_LIST[$char][3][2];
+            return self::$N_LIST[$char][3][2];
         }elseif($Result == 4){
-            return IranSystem::$N_LIST[$char][3][1];
+            return self::$N_LIST[$char][3][1];
         }elseif($Result == 2){
-            return IranSystem::$N_LIST[$char][3][0];
+            return self::$N_LIST[$char][3][0];
         }
 
-        return IranSystem::$N_LIST[$char][4][1];
+        return self::$N_LIST[$char][4][1];
     }
 
     /**
-     * Conver From IranSystem To UTF-8
+     * Conver From self To UTF-8
      * @param $str
      * @return string
      */
-    public static function FromIranSystem($str){
+    public static function Fromself($str){
         $str = str_split($str);
         $str = array_reverse($str);
         $From= [];
-        foreach(IranSystem::$List as $r){
+        foreach(self::$List as $r){
             if(!empty($r[3]))
                 $From[str_replace('*','',$r[2])] = $r[3];
             else
