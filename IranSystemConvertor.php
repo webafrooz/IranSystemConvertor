@@ -177,7 +177,7 @@ class IranSystem{
      * @param null $str
      * @return mixed
      */
-    public static function Toself($str = null){
+    public static function IranSystem($str = null){
         //
         $str = str_replace(["ي","\0"],["ی",""],$str);
         $ss  = mb_str_split(trim($str));
@@ -253,7 +253,7 @@ class IranSystem{
      * @param $str
      * @return string
      */
-    public static function Fromself($str){
+    public static function FromIranSystem($str){
         $str = str_split($str);
         $str = array_reverse($str);
         $From= [];
