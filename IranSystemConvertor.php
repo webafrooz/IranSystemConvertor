@@ -177,7 +177,7 @@ class IranSystem{
      * @param null $str
      * @return mixed
      */
-    public static function IranSystem($str = null){
+    public static function ToIranSystem($str = null){
         //
         $str = str_replace(["ي","\0"],["ی",""],$str);
         $ss  = mb_str_split(trim($str));
