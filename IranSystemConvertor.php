@@ -178,6 +178,9 @@ class IranSystem{
      * @return mixed
      */
     public static function ToIranSystem($str = null){
+		//Reset Last Data
+		self::$Pars_I  = [];
+		self::$Pars_O  = [];
         //
         $str = str_replace(["ي","\0"],["ی",""],$str);
         $ss  = mb_str_split(trim($str));
@@ -254,6 +257,9 @@ class IranSystem{
      * @return string
      */
     public static function FromIranSystem($str){
+		//Reset Last Data
+		self::$Pars_I  = [];
+		self::$Pars_O  = [];
         $str = str_split($str);
         $str = array_reverse($str);
         $From= [];
