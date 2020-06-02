@@ -1,7 +1,7 @@
 <?php
 namespace webafrooz;
 /**
- * برنامه نویس : محمود اسکندری
+ *
  * Author: Mahmoud Eskandari
  * Email:Info@webafrooz.com
  * 
